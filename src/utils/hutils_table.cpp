@@ -43,7 +43,7 @@ namespace hUtils {
                         std::cout << std::setw(padding) << " ";
                         std::cout << elements[index];
                     }
-                    else{
+                    else if(orientation == "left"){
                         std::cout << elements[index];
                         std::cout << std::setw(padding) << " ";
                     }

@@ -61,7 +61,7 @@ void itemPaginatedMenu(){
 
         std::cout<<'\n';
         text.toCentered("[N] Next Page | [P] Previous Page | [E] Exit");
-        std::cout<< text.color(93) + "Choose: " + text.defaultText();
+        std::cout<< text.fgColor(93) + "Choose: " + text.defaultText();
         std::cin >> choice;
         choice = tolower(choice);
 
@@ -94,7 +94,7 @@ void nestedMenus(){
 
         text.toCentered("Main Menu", 93);
         text.toCentered("[C] Character Sheet | [I] Inventory | [U] Use Item | [E] Exit");
-        std::cout << text.color(93) + "\nPick a menu: " + text.defaultText();
+        std::cout << text.fgColor(93) + "\nPick a menu: " + text.defaultText();
         std::cin >> choice;
         choice = tolower(choice);
 
@@ -115,9 +115,9 @@ void tableMenu(){
     text.toLine();
     table.setElements(
         "Spells", "Skills", "Status",
-        text.color(31) + "Fire Ball"   + text.defaultText(),
-        text.color(34) + "Destruction" + text.defaultText(),
-        text.color(32) + "Poisoned"    + text.defaultText()
+        text.fgColor(31) + "Fire Ball"   + text.defaultText(),
+        text.fgColor(34) + "Destruction" + text.defaultText(),
+        text.fgColor(32) + "Poisoned"    + text.defaultText()
     );
     table.toColumn("left", 15, 3);
     text.toLine();

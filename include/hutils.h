@@ -44,6 +44,7 @@ namespace hUtils {
                                           int number = 0,
                                           bool use256 = false);
         HUTIL_API std::string toLowerCase(std::string text);     //  Convert string to lowercase.
+        HUTIL_API std::string toUpperCase(std::string text);     //  Convert string to uppercase.
         template <typename T>
         HUTIL_API std::string toString(const T& value,           //  Converts int and doubles to string.
                                        int precision)
@@ -56,15 +57,16 @@ namespace hUtils {
             return oss.str();
         }
 
-        HUTIL_API std::string fgColor    (int textColor = 0,     //  Get ANSI color codes.
+        HUTIL_API std::string fgColor    (int textColor = 0,        //  Get ANSI color codes.
                                           bool use256 = false);
         HUTIL_API std::string bgColor    (int textColor = 0,
                                           bool use256 = false);
-        HUTIL_API std::string defaultText();                     //  Reset text color.
+        HUTIL_API std::string defaultText();                        //  Reset text color.
 
-        HUTIL_API void clearAll          ();                     //  Clears every output in the terminal.
-        HUTIL_API void clearBelow        (int line);             //  Clears an assigned line below it.
-        HUTIL_API void clearAbove        (int line);             //  Clears an assigned line above it.
+        HUTIL_API void clearAll          ();                        //  Clears every output in the terminal.
+        HUTIL_API void clearBelow        (int line);                //  Clears an assigned line below it.
+        HUTIL_API void clearAbove        (int line,                 //  Clears an assigned line above it.
+                                          bool clrBaseIdx = false);
     };
 
     struct Table {

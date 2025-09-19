@@ -20,8 +20,8 @@ int main(){
 
     pause(); text.clearAll();
 
-    std::cout << text.color(92) + "This is bright green (92)\n"         + text.defaultText();
-    std::cout << text.color(32) + "This is not bright but green (32)\n" + text.defaultText();
+    std::cout << text.bgColor(92) + "This is bright green (92)\n"         + text.defaultText();
+    std::cout << text.fgColor(32) + "This is not bright but green (32)\n" + text.defaultText();
     
     pause();
 

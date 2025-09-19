@@ -13,7 +13,7 @@ namespace hUtils {
 
     void Text::toLine(char character)
     {
-        cout << string(SCREEN_WIDTH, character) << '\n';
+        cout << string(SCREEN_WIDTH - 1, character) << '\n';
     }
 
     void Text::toCentered(string text, int colorCode, int number, bool use256)
@@ -26,11 +26,11 @@ namespace hUtils {
             text = std::to_string(number) + ". " + text;
         }
     
-        std::cout << fgColor(colorCode, use256)
-                  << std::string(padding, ' ')
-                  << text
-                  << defaultText()
-                  << '\n';
+        cout << fgColor(colorCode, use256)
+             << std::string(padding, ' ')
+             << text
+             << defaultText()
+             << '\n';
     }
 
     void Text::toRight(string text, int colorCode, bool use256)
@@ -55,6 +55,12 @@ namespace hUtils {
     string Text::toLowerCase(string text)
     {
         transform(text.begin(), text.end(), text.begin(), ::tolower);
+        return text;
+    }
+
+    string Text::toUpperCase(string text)
+    {
+        transform(text.begin(), text.end(), text.begin(), ::toupper);
         return text;
     }
 
@@ -101,17 +107,17 @@ namespace hUtils {
 
     void Text::clearAll()
     {
-#ifdef _WIN32
-    if(std::getenv("TERM")){ 
-        // Use ANSI escape codes if the terminal supports it
+    #ifdef _WIN32
+        if(std::getenv("TERM")){ 
+            // Use ANSI escape codes if the terminal supports it
+            std::cout << "\033[2J\033[H" << std::flush;
+        }
+        else{
+            system("cls");
+        }
+    #else
         std::cout << "\033[2J\033[H" << std::flush;
-    }
-    else{
-        system("cls");
-    }
-#else
-    std::cout << "\033[2J\033[H" << std::flush;
-#endif
+    #endif
     }
 
     void Text::clearBelow(int line)
@@ -120,9 +126,15 @@ namespace hUtils {
         cout << "\033[J";
     }
 
-    void Text::clearAbove(int line) {
+    void Text::clearAbove(int line, bool clrBaseIdx) {
+        if(clrBaseIdx) {
+            cout << "\033[2K";
+        }
+        
         for (int i = 0; i < line; i++) {
-            cout << "\033[1A" << "\033[2K";
+            cout << "\033[1A"  //  Move cursor up one line.
+                 << "\033[G"   //  Move cursor to column 1 (leftmost).
+                 << "\033[2K"; //  Clear the entire line.
         }
         cout.flush();
     }

@@ -18,9 +18,13 @@ namespace hUtils {
                 std::cerr << "Error: Could not get console handle." << std::endl;
                 return;
             }
+
+            //  Temporary because is so ass.
+            SMALL_RECT tempRect = {0, 0, 1, 1};
+            SetConsoleWindowInfo(hOut, TRUE, &tempRect);
         
             // Set buffer size (prevents scrolling)
-            COORD bufferSize = { static_cast<SHORT>(SCREEN_WIDTH), static_cast<SHORT>(SCREEN_HEIGHT) };
+            COORD bufferSize = { static_cast<SHORT>(SCREEN_WIDTH), static_cast<SHORT>(SCREEN_HEIGHT * 30) };
             SetConsoleScreenBufferSize(hOut, bufferSize);
         
             // Set the window size
@@ -45,12 +49,16 @@ namespace hUtils {
         #endif
     }
 
+    /*
+        std::cin.get() is so primitive that I have to add a check(bool) if the last input ended with a new line('\n').
+        Otherwise, the whole premise refuses to work.
+
+        To any knows how to fix this problem PLS can I get a comment. I SUCK AT CODING!!!!!1
+    */
     void pause(bool clearBuffer)
     {
         std::cout << "Press Enter to continue. . .";
-        if (clearBuffer) {
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        }
+        if (clearBuffer) std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         std::cin.get();
         hUtils::text.clearAbove(1);
     }

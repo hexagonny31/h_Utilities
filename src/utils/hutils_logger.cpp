@@ -31,38 +31,38 @@ namespace hUtils {
     void Logger::Removed(const string& message)
     {
         cout.flush();
-        cout << text.fgColor(93) << "Successfuly deleted: " + message << '\n' << text.defaultText(); 
+        cout << text.fgColor(93) << "Successfuly deleted: " << text.defaultText() << message << '\n'; 
         foldersRemoved++;
     }
 
     void Logger::Created(const string& message)
     {
         cout.flush();
-        cout << text.fgColor(92) << "New folder created: " + message << '\n' << text.defaultText(); 
+        cout << text.fgColor(92) << "New folder created: " << text.defaultText() << message << '\n'; 
         foldersCreated++;
     }
 
     void Logger::Error(const string& message)
     {
         cerr.flush();
-        cerr << text.fgColor(91) << "Error: " + message << '\n' << text.defaultText(); 
+        cerr << text.fgColor(91) << "Error: " << text.defaultText() << message << '\n'; 
         errors++;
     }
 
     void Logger::Warning(const string& message)
     {
         cerr.flush();
-        cerr << text.fgColor(95) << "Warning: " + message << '\n' << text.defaultText(); 
+        cerr << text.fgColor(95) << "Warning: " << text.defaultText() << message << '\n'; 
         warnings++;
     }
 
     void Logger::Summary()
     {
-        cout << "\nSummary:\n\n"
+        cout << "Summary:\n\n"
              << setw(17) << left << "Files Moved: "     << filesMoved     << '\n'
              << setw(17) << left << "Folders Removed: " << foldersRemoved << '\n'
              << setw(17) << left << "Folders Created: " << foldersCreated << '\n'
              << setw(17) << left << "Warnings: "        << warnings       << '\n'
-             << setw(17) << left << "Errors: "          << errors         << "\n\n";
+             << setw(17) << left << "Errors: "          << errors         << "\n";
     }
 }
