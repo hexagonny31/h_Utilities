@@ -31,6 +31,7 @@ namespace hUtils {
     // --- TEXT UTILITIES ---
     struct Text {
     public:
+        HUTIL_API void trim              (std::string& text);
         HUTIL_API void toLine            (char character = '-'); //  Print a line of repeated characters
         HUTIL_API void toCentered        (std::string text,      //  Prints centered text.
                                           int colorCode = 0,
@@ -62,8 +63,12 @@ namespace hUtils {
         HUTIL_API std::string bgColor    (int textColor = 0,
                                           bool use256 = false);
         HUTIL_API std::string defaultText();                        //  Reset text color.
+        HUTIL_API std::string stripAnsi(const std::string& text) const
+        {
+            return std::regex_replace(text, std::regex("\033\\[[0-9;]*m"), "");
+        }
 
-        HUTIL_API void clearAll          ();                        //  Clears every output in the terminal.
+        HUTIL_API void clearAll          (int delay = 0);                        //  Clears every output in the terminal.
         HUTIL_API void clearBelow        (int line);                //  Clears an assigned line below it.
         HUTIL_API void clearAbove        (int line,                 //  Clears an assigned line above it.
                                           bool clrBaseIdx = false);
@@ -72,11 +77,6 @@ namespace hUtils {
     struct Table {
     private:
         std::vector<std::string> elements;
-    
-        std::string stripAnsi(const std::string& text) const
-        {
-            return std::regex_replace(text, std::regex("\033\\[[0-9;]*m"), "");
-        }
 
         template <typename T>
         std::string toString (const T& value)
@@ -85,7 +85,7 @@ namespace hUtils {
             oss << value;
             return oss.str();
         }
-        int calculateMaxWidth() const;
+        int findMaxWidth() const;
     
     public:
         template <typename... Args>
