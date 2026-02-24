@@ -24,13 +24,27 @@ constexpr int SCREEN_HEIGHT = 30;
 namespace hUtils {
 
     // --- SYSTEM UTILITIES ---
-    HUTIL_API void setConsoleWindowSize();          //  Adjust console size.
-    HUTIL_API void pause(bool clearBuffer = false); //  Cross-platform system pause.
-    HUTIL_API void sleep(int milliseconds);         //  Sleep for a given duration.
+    #ifdef _WIN32
+        HUTIL_API char GetInputKeymap(std::initializer_list<unsigned char> keys); //  Waits for a key press and returns the corresponding character.
+    #endif
+    HUTIL_API void        SetConsoleWindowSize();          //  Adjust console size.
+    HUTIL_API void        Pause               (bool clearBuffer = false); //  Cross-platform system pause.
+    HUTIL_API void        Sleep               (int milliseconds);         //  Sleep for a given duration.
+    HUTIL_API bool        Proceed             (std::string prompt = "Do you want to continue?");
+    HUTIL_API char        GetCharacterInput   (std::string prompt = "");
+    HUTIL_API std::string GetStringInput      (std::string prompt = "",
+                                               int min = 2,
+                                               int max = 64);
+    HUTIL_API int         GetIntegerInput     (std::string prompt = "",
+                                               int min = 0,
+                                               int max = 10);
 
     // --- TEXT UTILITIES ---
     struct Text {
     public:
+        HUTIL_API void reject            (const std::string& msg);
+        HUTIL_API void reject            (const std::string& msg,
+                                          int lines);
         HUTIL_API void trim              (std::string& text);
         HUTIL_API void toLine            (char character = '-'); //  Print a line of repeated characters
         HUTIL_API void toCentered        (std::string text,      //  Prints centered text.
@@ -85,7 +99,7 @@ namespace hUtils {
             oss << value;
             return oss.str();
         }
-        int findMaxWidth() const;
+        unsigned int findMaxWidth() const;
     
     public:
         template <typename... Args>
@@ -94,9 +108,17 @@ namespace hUtils {
             elements.clear();
             (elements.push_back(toString(args)), ...);
         }
-        HUTIL_API void toColumn   (std::string orientation = "left",
-                                   int givenWidth = 0,
-                                   int numberOfColumns = 2);
+        template <typename T>
+        HUTIL_API void setElements(const std::vector<T>& vec) {
+            elements.clear();
+            for (const auto& item : vec) {
+                elements.push_back(toString(item));
+            }
+        }
+        
+        HUTIL_API void toColumn   (std::string  orientation     = "left",
+                                   unsigned int givenWidth      = 0,
+                                   unsigned int numberOfColumns = 2);
     };
     
     struct Bar {
